@@ -1,3 +1,8 @@
-# Bynder Connector - UI_COMPONENT_PLAN.md
+# Bynder Connector — UI Component Plan
 
-Standard documentation for Bynder Connector in Imperal Cloud.
+**Compliance:** UI_INTERFACE_STANDARD.md
+
+## Интерфейс
+- **Левый сайдбар:** Форма подключения на всю ширину контейнера, все инпуты с лейблами и контекстными плейсхолдерами.
+- **Центральная зона:** Карточки статуса подключения, таблица сущностей (медиа-активы (/media)), журнал операций.
+- **Модальные окна:** Предупреждения и подтверждения для любых деструктивных или модифицирующих действий.
