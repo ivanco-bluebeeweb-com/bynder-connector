@@ -32,7 +32,7 @@ async def resolve_client(ctx, connection_id: str = "") -> BynderClient:
     effects=["create:connection"],
     data_model=ConnectionRecord
 )
-async def connect_bynder(params: ConnectParams, ctx) -> ActionResult:
+async def connect_bynder(ctx, params: ConnectParams) -> ActionResult:
     """Connect Bynder DAM account."""
     client = BynderClient(auth_token=params.auth_token, base_url=params.base_url)
     res = await client.verify_auth()
@@ -67,7 +67,7 @@ async def connect_bynder(params: ConnectParams, ctx) -> ActionResult:
     effects=["read:connections"],
     data_model=ConnectionList
 )
-async def list_connections(params: NoParams, ctx) -> ActionResult:
+async def list_connections(ctx, params: NoParams) -> ActionResult:
     """List configured connections."""
     conns = await ctx.store.get("connections", [])
     items = [
@@ -91,7 +91,7 @@ async def list_connections(params: NoParams, ctx) -> ActionResult:
     effects=["delete:connection"],
     data_model=DeleteResult
 )
-async def disconnect_bynder(params: ConnectionIdParams, ctx) -> ActionResult:
+async def disconnect_bynder(ctx, params: ConnectionIdParams) -> ActionResult:
     """Disconnect account."""
     connections = await ctx.store.get("connections", [])
     if not connections:
