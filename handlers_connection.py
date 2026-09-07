@@ -8,7 +8,7 @@ from schemas import NoParams, ConnectParams, ConnectionIdParams, ConnectionRecor
 from bynder_client import BynderClient
 
 async def resolve_client(ctx, connection_id: str = "") -> BynderClient:
-    connections = await ctx.store.get("connections", [])
+    connections = (await ctx.store.get("connections", [])) or []
     if not connections:
         raise ValueError("No Bynder connections configured. Use connect_bynder first.")
     conn = None
@@ -39,7 +39,7 @@ async def connect_bynder(ctx, params: ConnectParams) -> ActionResult:
     if res.get("status") == "error":
         return ActionResult.error(f"Failed to authenticate with Bynder: {res.get('error')}")
 
-    connections = await ctx.store.get("connections", [])
+    connections = (await ctx.store.get("connections", [])) or []
     masked = params.auth_token[:6] + "..." if len(params.auth_token) > 6 else "***"
     record = {
         "id": f"conn_{uuid.uuid4().hex[:8]}",
@@ -93,7 +93,7 @@ async def list_connections(ctx, params: NoParams) -> ActionResult:
 )
 async def disconnect_bynder(ctx, params: ConnectionIdParams) -> ActionResult:
     """Disconnect account."""
-    connections = await ctx.store.get("connections", [])
+    connections = (await ctx.store.get("connections", [])) or []
     if not connections:
         return ActionResult.error("No active connections to disconnect.")
 
